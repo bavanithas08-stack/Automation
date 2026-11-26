@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automatic Medicine Delivery Robot | AI-Based Patient Identification</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand">
+        <span class="brand-badge" aria-hidden="true">MD</span>
+        <span class="brand-text">
+          <strong>MedBot AI</strong>
+          <small>Autonomous Medicine Delivery</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#ai-system">AI System</a>
+        <a href="#robot">Robot</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#live-status">Live Status</a>
+        <a href="#notifications">Notifications</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="conn-pill" id="sseStatus" title="Real-time server telemetry link">
+        <span class="dot"></span>
+        <span id="sseStatusText">Connecting...</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. HOME SECTION -->
+    <section id="home" class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">AI-Based Patient Identification &amp; Autonomous Medicine Delivery</div>
+          <h1>Smart Medicine Delivery for Safer Patient Care</h1>
+          <p class="lead">
+            An autonomous robot designed to deliver scheduled medicines to the correct patient.
+            The system combines AI face recognition, RTC scheduling, obstacle detection, wireless
+            ESP-NOW communication, motor control, and automatic 3-compartment medicine dispensing.
+          </p>
+          <blockquote class="one-liner">
+            &ldquo;An AI-enabled autonomous robot that identifies the correct patient and delivers scheduled medicines safely and automatically.&rdquo;
+          </blockquote>
+          <div class="hero-actions">
+            <a href="#live-status" class="btn btn-primary">Open Live Dashboard</a>
+            <a href="#robot" class="btn btn-secondary">Launch Robot Simulator</a>
+            <a href="#hardware" class="btn btn-ghost">Architecture &amp; Firmware</a>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric-chip">
+              <span class="metric-label">Vision Unit</span>
+              <strong>ESP32-CAM (1 / 0)</strong>
+            </div>
+            <div class="metric-chip">
+              <span class="metric-label">Wireless Link</span>
+              <strong>2 &times; ESP8266 ESP-NOW</strong>
+            </div>
+            <div class="metric-chip">
+              <span class="metric-label">Actuators</span>
+              <strong>6 &times; SG90 + 2 &times; DC</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="robot-card">
+            <div class="robot-card-top">
+              <span class="tag tag-teal">Autonomous Unit #01</span>
+              <span class="tag" id="heroRobotStatus">Searching</span>
+            </div>
+            <!-- Custom technical SVG illustration of the robot -->
+            <svg viewBox="0 0 420 340" class="robot-svg" role="img" aria-label="Automatic Medicine Delivery Robot Schematic Illustration">
+              <defs>
+                <linearGradient id="chassisGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f8fafc" />
+                  <stop offset="100%" stop-color="#e2e8f0" />
+                </linearGradient>
+                <linearGradient id="tealGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#0d9488" />
+                  <stop offset="100%" stop-color="#0284c7" />
+                </linearGradient>
+              </defs>
+              <!-- Floor shadow -->
+              <ellipse cx="210" cy="308" rx="135" ry="16" fill="#cbd5e1" opacity="0.55" />
+              <!-- Ultrasonic scan arcs -->
+              <path d="M 275 180 Q 335 155 360 195" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="5 5" opacity="0.7" />
+              <path d="M 275 180 Q 355 135 388 190" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="5 5" opacity="0.4" />
+              <!-- Camera mast & ESP32-CAM -->
+              <rect x="195" y="70" width="30" height="58" rx="6" fill="#334155" />
+              <rect x="166" y="34" width="88" height="44" rx="10" fill="#0f172a" stroke="#0d9488" stroke-width="2.5" />
+              <circle cx="210" cy="56" r="13" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5" />
+              <circle cx="210" cy="56" r="5" fill="#38bdf8" />
+              <circle cx="238" cy="46" r="3" fill="#22c55e" />
+              <text x="210" y="24" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e">ESP32-CAM (Pan Servo)</text>
+
+              <!-- Robot Upper Body & 3 Medicine Compartments -->
+              <rect x="92" y="122" width="236" height="130" rx="18" fill="url(#chassisGrad)" stroke="#94a3b8" stroke-width="2" />
+              <rect x="108" y="136" width="60" height="44" rx="7" fill="#ffffff" stroke="#0d9488" stroke-width="2" />
+              <rect x="180" y="136" width="60" height="44" rx="7" fill="#ffffff" stroke="#0d9488" stroke-width="2" />
+              <rect x="252" y="136" width="60" height="44" rx="7" fill="#ffffff" stroke="#0d9488" stroke-width="2" />
+              <text x="138" y="162" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e">COMP 1</text>
+              <text x="210" y="162" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e">COMP 2</text>
+              <text x="282" y="162" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e">COMP 3</text>
+
+              <!-- 16x2 I2C LCD Screen on chassis -->
+              <rect x="115" y="196" width="128" height="40" rx="6" fill="#064e3b" stroke="#1e293b" stroke-width="2" />
+              <text x="124" y="213" font-family="monospace" font-size="10" fill="#6ee7b7">MEDBOT READY</text>
+              <text x="124" y="227" font-family="monospace" font-size="10" fill="#6ee7b7">RTC: 09:00 PM</text>
+
+              <!-- Ultrasonic Dual-Servo Turret -->
+              <rect x="260" y="195" width="44" height="24" rx="6" fill="url(#tealGrad)" />
+              <circle cx="272" cy="207" r="6" fill="#e0f2fe" />
+              <circle cx="292" cy="207" r="6" fill="#e0f2fe" />
+              <text x="282" y="236" text-anchor="middle" font-size="9.5" font-weight="600" fill="#334155">HC-SR04 (2 Servos)</text>
+
+              <!-- Lower Base & DC Motors + Wheels -->
+              <rect x="78" y="250" width="264" height="26" rx="10" fill="#1e293b" />
+              <circle cx="122" cy="282" r="24" fill="#0f172a" stroke="#64748b" stroke-width="4" />
+              <circle cx="122" cy="282" r="8" fill="#0d9488" />
+              <circle cx="298" cy="282" r="24" fill="#0f172a" stroke="#64748b" stroke-width="4" />
+              <circle cx="298" cy="282" r="8" fill="#0d9488" />
+              <text x="210" y="267" text-anchor="middle" font-size="10" font-weight="600" fill="#e2e8f0">L293D Driver + 2x DC Motors</text>
+            </svg>
+            <div class="robot-card-footer">
+              <div><small>Patient Match</small><strong id="heroFaceMatch">0 (No Match)</strong></div>
+              <div><small>Obstacle</small><strong id="heroObstacle">Clear (142 cm)</strong></div>
+              <div><small>Battery</small><strong id="heroBattery">94% (11.9V)</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY FEATURES STRIP -->
+    <section class="features-strip">
+      <div class="container">
+        <div class="section-head compact">
+          <h2>Key System Capabilities</h2>
+          <p>Core automated features built into the hardware and web platform.</p>
+        </div>
+        <div class="feature-pills">
+          <div class="feature-pill">Scheduled medicine delivery using RTC</div>
+          <div class="feature-pill">AI-based patient face recognition</div>
+          <div class="feature-pill">Autonomous forward, backward &amp; turning movement</div>
+          <div class="feature-pill">Ultrasonic obstacle detection</div>
+          <div class="feature-pill">ESP-NOW wireless communication between ESP8266 boards</div>
+          <div class="feature-pill">Three-compartment automatic medicine dispensing</div>
+          <div class="feature-pill">16&times;2 I2C LCD &amp; buzzer status indication</div>
+          <div class="feature-pill">Caretaker notification capability</div>
+          <div class="feature-pill">Servo-based camera and ultrasonic scanning</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT SECTION -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">02 &bull; About the Project</span>
+          <h2>Reducing Manual Workload &amp; Ensuring Right-Patient Delivery</h2>
+          <p>
+            The Automatic Medicine Delivery Robot reduces manual work in medicine delivery and helps
+            improve patient identification accuracy in clinical and home-care environments.
+          </p>
+        </div>
+
+        <div class="cards-3">
+          <article class="card">
+            <h3>Problem Statement</h3>
+            <p>
+              Manual medicine distribution in wards and assisted-living facilities is time-consuming and
+              prone to missed schedules or wrong-patient administration, especially during busy shifts or
+              nighttime rounds.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Objective &amp; Motivation</h3>
+            <p>
+              Build a low-cost, autonomous mobile platform that wakes up precisely on an RTC schedule,
+              navigates safely around obstacles, verifies the recipient using ESP32-CAM face recognition,
+              and unlocks only the intended medicine compartment.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Safety Interlock Design</h3>
+            <p>
+              Dispensing is strictly gated by two conditions: a valid scheduled time match from the
+              DS3231 RTC module and an AI face recognition match signal (<code>1 = Match</code>).
+              Both local LCD/buzzer alerts and caretaker notifications keep staff informed.
+            </p>
+          </article>
+        </div>
+
+        <div class="future-box">
+          <h3>Future Scope</h3>
+          <div class="future-grid">
+            <span>Indoor mapping &amp; SLAM</span>
+            <span>Better localization</span>
+            <span>Multiple patient profiles</span>
+            <span>Mobile &amp; web real-time monitoring</span>
+            <span>Medicine inventory tracking</span>
+            <span>Cloud logging</span>
+            <span>Battery health monitoring</span>
+            <span>Voice assistance</span>
+            <span>Clinical safety validation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. HOW IT WORKS SECTION -->
+    <section id="how-it-works" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">03 &bull; How It Works</span>
+          <h2>7-Step Autonomous Delivery Workflow</h2>
+          <p>The active step highlights in real time as the robot runs a delivery cycle.</p>
+        </div>
+
+        <div class="workflow-grid" id="workflowGrid">
+          <article class="step-card" data-step="1">
+            <span class="step-num">01</span>
+            <h3>Schedule</h3>
+            <p>RTC checks the programmed medicine time.</p>
+          </article>
+          <article class="step-card" data-step="2">
+            <span class="step-num">02</span>
+            <h3>Start</h3>
+            <p>Robot starts moving at the scheduled time.</p>
+          </article>
+          <article class="step-card" data-step="3">
+            <span class="step-num">03</span>
+            <h3>Search</h3>
+            <p>Robot searches while monitoring obstacles.</p>
+          </article>
+          <article class="step-card" data-step="4">
+            <span class="step-num">04</span>
+            <h3>AI Verification</h3>
+            <p>ESP32-CAM detects and recognizes the registered patient.</p>
+          </article>
+          <article class="step-card" data-step="5">
+            <span class="step-num">05</span>
+            <h3>Patient Found</h3>
+            <p>A valid face match generates a patient-found signal.</p>
+          </article>
+          <article class="step-card" data-step="6">
+            <span class="step-num">06</span>
+            <h3>Medicine Delivery</h3>
+            <p>The required medicine servo opens the selected compartment.</p>
+          </article>
+          <article class="step-card" data-step="7">
+            <span class="step-num">07</span>
+            <h3>Completion</h3>
+            <p>Delivery status is displayed on LCD and sent to the caretaker.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. AI SYSTEM SECTION -->
+    <section id="ai-system" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">04 &bull; AI System</span>
+          <h2>ESP32-CAM Face Detection &amp; Recognition</h2>
+          <p>
+            The ESP32-CAM acts as the vision unit. A registered patient&rsquo;s face is stored as the reference.
+            During delivery, the camera pan servo scans the surroundings and outputs a binary verification signal.
+          </p>
+        </div>
+
+        <div class="ai-layout">
+          <div class="card ai-viewport-card">
+            <div class="viewport-header">
+              <span>ESP32-CAM Vision Stream</span>
+              <span class="badge" id="aiSignalBadge">Signal: 0 (No Match)</span>
+            </div>
+            <div class="ai-camera-frame" id="aiCameraFrame">
+              <div class="cam-overlay-top">
+                <span id="aiProfileName">Ref: Registered Patient #1</span>
+                <span id="aiCamAngle">Pan Servo: 90&deg;</span>
+              </div>
+              <div class="face-reticle" id="faceReticle">
+                <div class="reticle-corner tl"></div>
+                <div class="reticle-corner tr"></div>
+                <div class="reticle-corner bl"></div>
+                <div class="reticle-corner br"></div>
+                <div class="face-silhouette" aria-hidden="true">
+                  <div class="head"></div>
+                  <div class="shoulders"></div>
+                </div>
+                <div class="reticle-label" id="reticleLabel">Scanning for Registered Face...</div>
+              </div>
+              <div class="cam-overlay-bottom">
+                <span>Output Code: <strong id="aiBinaryCode">0</strong></span>
+                <span>Confidence: <strong id="aiConfidence">0.0%</strong></span>
+              </div>
+            </div>
+            <div class="ai-controls">
+              <button class="btn btn-primary" id="btnSimulateMatch">Simulate Face Match (1 = Match)</button>
+              <button class="btn btn-secondary" id="btnSimulateNoMatch">Simulate No Match (0 = No Match)</button>
+            </div>
+          </div>
+
+          <div class="card ai-details-card">
+            <h3>Verification Signal Logic</h3>
+            <div class="signal-table">
+              <div class="signal-row signal-match">
+                <div class="signal-code">1</div>
+                <div>
+                  <strong>Match &mdash; Patient Verified</strong>
+                  <p>Generates the <code>patient-found</code> signal, stops drive motors, triggers confirmation chime, and authorizes the scheduled compartment servo.</p>
+                </div>
+              </div>
+              <div class="signal-row signal-nomatch">
+                <div class="signal-code">0</div>
+                <div>
+                  <strong>No Match &mdash; Unverified / Not Found</strong>
+                  <p>Keeps all 3 medicine compartments locked. Robot rotates the camera servo and continues searching, or notifies the caretaker if timeout occurs.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="slider-group">
+              <label for="cameraPanSlider">
+                Camera Pan Servo (Board 1 &bull; SG90 #6): <strong id="cameraPanValue">90&deg;</strong>
+              </label>
+              <input type="range" id="cameraPanSlider" min="15" max="165" value="90" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ROBOT MOVEMENT & OBSTACLE AVOIDANCE SIMULATOR -->
+    <section id="robot" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">05 &bull; Robot Navigation &amp; Simulator</span>
+          <h2>Autonomous Movement &amp; Dual-Servo Ultrasonic Avoidance</h2>
+          <p>
+            The ultrasonic sensor detects obstacles in the robot&rsquo;s path while two SG90 servos rotate
+            the sensing head to scan left, center, and right. Run a live autonomous delivery mission below
+            or click anywhere in the arena to toggle obstacles.
+          </p>
+        </div>
+
+        <div class="sim-layout">
+          <div class="sim-canvas-wrap card">
+            <div class="sim-toolbar">
+              <button class="btn btn-primary" id="btnStartMission">Start Scheduled Delivery</button>
+              <button class="btn btn-secondary" id="btnStopMission">Stop Robot</button>
+              <button class="btn btn-ghost" id="btnResetMission">Reset Arena &amp; Servos</button>
+              <label class="toggle-inline">
+                <input type="checkbox" id="chkPatientPresent" checked />
+                <span>Patient Recognizable (Match = 1)</span>
+              </label>
+            </div>
+            <canvas id="robotArena" width="760" height="420" aria-label="2D Autonomous Robot Navigation Simulator"></canvas>
+            <div class="sim-legend">
+              <span><i class="legend-dot dock"></i> Charging Dock</span>
+              <span><i class="legend-dot robot"></i> MedBot</span>
+              <span><i class="legend-dot obstacle"></i> Obstacle (Click arena to add/remove)</span>
+              <span><i class="legend-dot patient"></i> Patient Bed</span>
+            </div>
+          </div>
+
+          <div class="card sim-telemetry-card">
+            <h3>Motion &amp; Sensing Telemetry</h3>
+            <div class="telemetry-list">
+              <div class="t-row"><span>L293D Left Motor</span><strong id="simLeftMotor">STOP</strong></div>
+              <div class="t-row"><span>L293D Right Motor</span><strong id="simRightMotor">STOP</strong></div>
+              <div class="t-row"><span>Ultrasonic Pan Servo</span><strong id="simUsPan">90&deg;</strong></div>
+              <div class="t-row"><span>Ultrasonic Tilt Servo</span><strong id="simUsTilt">90&deg;</strong></div>
+              <div class="t-row"><span>Measured Distance</span><strong id="simDistance">142 cm</strong></div>
+              <div class="t-row"><span>Path Status</span><strong id="simPathStatus">Clear</strong></div>
+            </div>
+            <div class="sim-quick-actions">
+              <h4>Manual Fault / Event Injection</h4>
+              <div class="btn-grid">
+                <button class="btn btn-secondary btn-sm" id="btnInjectObstacle">Simulate Obstacle (18 cm)</button>
+                <button class="btn btn-secondary btn-sm" id="btnClearObstacle">Clear Obstacle</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. HARDWARE & ARCHITECTURE SECTION -->
+    <section id="hardware" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">06 &bull; Hardware &amp; System Architecture</span>
+          <h2>Multi-Controller Architecture &amp; Main Components</h2>
+          <p>
+            Workloads are cleanly divided across the ESP32-CAM and two ESP8266 boards linked wirelessly via ESP-NOW.
+          </p>
+        </div>
+
+        <div class="arch-grid">
+          <div class="card arch-card">
+            <span class="arch-badge">Vision AI</span>
+            <h3>ESP32-CAM</h3>
+            <ul>
+              <li>AI face detection and face recognition</li>
+              <li>Registered patient reference comparison</li>
+              <li>Outputs <code>1 = Match</code> / <code>0 = No Match</code></li>
+              <li>Mounted on dedicated camera rotation servo</li>
+            </ul>
+            <a href="/firmware/esp32_cam_vision/esp32_cam_vision.ino" target="_blank" class="firmware-link">View ESP32-CAM Sketch &rarr;</a>
+          </div>
+
+          <div class="card arch-card">
+            <span class="arch-badge">Actuator Hub</span>
+            <h3>ESP8266 Board 1</h3>
+            <ul>
+              <li>Controls <strong>6 &times; SG90 Servos</strong> total:</li>
+              <li>2 servos for ultrasonic pan/tilt rotation</li>
+              <li>3 servos for medicine compartments</li>
+              <li>1 servo for ESP32-CAM rotation</li>
+            </ul>
+            <a href="/firmware/esp8266_board1_servos/esp8266_board1_servos.ino" target="_blank" class="firmware-link">View Board 1 Sketch &rarr;</a>
+          </div>
+
+          <div class="card arch-card">
+            <span class="arch-badge">Navigation &amp; UI</span>
+            <h3>ESP8266 Board 2</h3>
+            <ul>
+              <li>DS3231 RTC scheduling &amp; 16&times;2 I2C LCD</li>
+              <li>Buzzer alert &amp; ultrasonic distance sensing</li>
+              <li>L293D motor driver + 2 DC motors</li>
+              <li>Sends commands to Board 1 over ESP-NOW</li>
+            </ul>
+            <a href="/firmware/esp8266_board2_navigation/esp8266_board2_navigation.ino" target="_blank" class="firmware-link">View Board 2 Sketch &rarr;</a>
+          </div>
+        </div>
+
+        <div class="espnow-banner card">
+          <div>
+            <strong>ESP-NOW Wireless Link</strong>
+            <p>Low-latency peer-to-peer communication between ESP8266 Board 2 (Navigation/RTC) and ESP8266 Board 1 (6-Servo Controller).</p>
+          </div>
+          <div class="espnow-meta">
+            <span>Board 1 MAC: <code>A4:CF:12:8B:11:01</code></span>
+            <span>Board 2 MAC: <code>A4:CF:12:8B:11:02</code></span>
+            <a href="/firmware/WIRING_GUIDE.md" target="_blank" class="btn btn-secondary btn-sm">Wiring &amp; Pinout Guide</a>
+          </div>
+        </div>
+
+        <div class="table-wrap card">
+          <h3>Main Components List</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Component</th>
+                <th>Controller / Bus</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td><strong>ESP32-CAM</strong></td><td>Standalone + UART</td><td>AI face detection and recognition</td></tr>
+              <tr><td>2</td><td><strong>2 &times; ESP8266</strong></td><td>ESP-NOW + Wi-Fi</td><td>Robot control and wireless communication</td></tr>
+              <tr><td>3</td><td><strong>6 &times; SG90 Servos</strong></td><td>ESP8266 Board 1 (PWM)</td><td>Ultrasonic rotation (2), medicine dispensing (3), and camera rotation (1)</td></tr>
+              <tr><td>4</td><td><strong>Ultrasonic Sensor</strong></td><td>ESP8266 Board 2 (Trig/Echo)</td><td>Obstacle detection and distance measurement</td></tr>
+              <tr><td>5</td><td><strong>L293D Motor Driver</strong></td><td>ESP8266 Board 2 (GPIO/PWM)</td><td>Controls the two DC motors</td></tr>
+              <tr><td>6</td><td><strong>2 &times; DC Motors</strong></td><td>L293D Output A/B</td><td>Robot movement (forward, backward, turning)</td></tr>
+              <tr><td>7</td><td><strong>RTC Module</strong></td><td>ESP8266 Board 2 (I2C)</td><td>Scheduled medicine time</td></tr>
+              <tr><td>8</td><td><strong>16&times;2 I2C LCD</strong></td><td>ESP8266 Board 2 (I2C)</td><td>Robot status and messages</td></tr>
+              <tr><td>9</td><td><strong>Buzzer</strong></td><td>ESP8266 Board 2 (GPIO)</td><td>Alert and status indication</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. LIVE STATUS DASHBOARD SECTION -->
+    <section id="live-status" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">07 &bull; Live Dashboard</span>
+          <h2>Real-Time Robot, Patient &amp; Medicine Telemetry</h2>
+          <p>
+            Live status synchronized via Server-Sent Events (SSE) with both the built-in simulator and external ESP8266 hardware telemetry.
+          </p>
+        </div>
+
+        <!-- Live Dashboard KPI Grid (Section 11 exact fields) -->
+        <div class="dashboard-kpis">
+          <div class="kpi-card">
+            <span class="kpi-label">Current Time</span>
+            <strong class="kpi-value" id="dashTime">09:00 PM</strong>
+            <small class="kpi-sub">DS3231 RTC Synced</small>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Robot Status</span>
+            <strong class="kpi-value" id="dashRobotStatus">Searching</strong>
+            <small class="kpi-sub" id="dashStepText">Step 1: Schedule</small>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Patient Status</span>
+            <strong class="kpi-value" id="dashPatientStatus">Not Detected</strong>
+            <small class="kpi-sub" id="dashFaceSignal">AI Signal: 0</small>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Medicine Status</span>
+            <strong class="kpi-value" id="dashMedicineStatus">Pending</strong>
+            <small class="kpi-sub" id="dashActiveComp">Compartment #1</small>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Obstacle Status</span>
+            <strong class="kpi-value" id="dashObstacleStatus">Clear</strong>
+            <small class="kpi-sub" id="dashDistance">142 cm ahead</small>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Battery</span>
+            <strong class="kpi-value" id="dashBattery">94% / 11.9V</strong>
+            <small class="kpi-sub">3S Li-Ion Pack</small>
+          </div>
+        </div>
+
+        <div class="dashboard-panels">
+          <!-- Local Hardware Emulation: 16x2 I2C LCD + Buzzer -->
+          <div class="card">
+            <h3>Local Hardware Status (Board 2)</h3>
+            <div class="lcd-bezel">
+              <div class="lcd-screen" aria-label="16x2 I2C LCD Display">
+                <div id="lcdLine1">MEDBOT READY    </div>
+                <div id="lcdLine2">RTC: 09:00 PM   </div>
+              </div>
+            </div>
+            <div class="buzzer-bar">
+              <span>Buzzer Status:</span>
+              <span class="buzzer-pill" id="buzzerStatus">Silent</span>
+            </div>
+            <div class="dash-btn-row">
+              <button class="btn btn-primary btn-sm" id="btnDashStart">Trigger Delivery</button>
+              <button class="btn btn-secondary btn-sm" id="btnDashReset">Reset System</button>
+            </div>
+          </div>
+
+          <!-- 3 Medicine Compartments & RTC Schedule Control -->
+          <div class="card compartments-card">
+            <div class="card-header-inline">
+              <h3>3-Compartment Medicine Dispenser &amp; RTC Schedule</h3>
+              <button class="btn btn-secondary btn-sm" id="btnSaveSchedules">Save RTC Times</button>
+            </div>
+            <div class="compartments-grid" id="compartmentsGrid">
+              <!-- Populated dynamically by app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. NOTIFICATIONS SECTION -->
+    <section id="notifications" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">08 &bull; Caretaker Notifications</span>
+          <h2>Caretaker Alerts &amp; Delivery Event Log</h2>
+          <p>
+            Automatically logs when a patient is detected, when medicine is delivered, when an obstacle
+            is encountered, or when the patient cannot be detected.
+          </p>
+        </div>
+
+        <div class="card notif-card">
+          <div class="notif-toolbar">
+            <span>Live Event Stream (<strong id="notifCount">1</strong> events)</span>
+            <div class="notif-actions">
+              <button class="btn btn-secondary btn-sm" id="btnTestNotif">Send Test Caretaker Alert</button>
+              <button class="btn btn-ghost btn-sm" id="btnClearNotif">Clear Log</button>
+            </div>
+          </div>
+          <ul class="notif-list" id="notifList">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. TEAM SECTION -->
+    <section id="team" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">09 &bull; Project Team</span>
+          <h2>Department &amp; Engineering Contributors</h2>
+          <p>Department of Electronics, Robotics &amp; Embedded Systems &mdash; Academic Innovation Project.</p>
+        </div>
+
+        <div class="team-grid">
+          <article class="card team-card">
+            <div class="avatar">01</div>
+            <h3>AI &amp; Vision Lead</h3>
+            <p class="role">ESP32-CAM Face Recognition</p>
+            <p class="dept">Dept. of Electronics &amp; Communication Engineering</p>
+          </article>
+          <article class="card team-card">
+            <div class="avatar">02</div>
+            <h3>Embedded Firmware Lead</h3>
+            <p class="role">ESP8266 Boards 1 &amp; 2 + ESP-NOW</p>
+            <p class="dept">Dept. of Robotics &amp; Automation</p>
+          </article>
+          <article class="card team-card">
+            <div class="avatar">03</div>
+            <h3>Hardware &amp; Mechatronics</h3>
+            <p class="role">6 &times; SG90 Servos, L293D &amp; Chassis</p>
+            <p class="dept">Dept. of Mechanical &amp; Mechatronics</p>
+          </article>
+          <article class="card team-card">
+            <div class="avatar">04</div>
+            <h3>Web &amp; Dashboard Lead</h3>
+            <p class="role">Live Telemetry &amp; Caretaker Alerts</p>
+            <p class="dept">Dept. of Computer Science &amp; Engineering</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. CONTACT SECTION -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">10 &bull; Contact</span>
+          <h2>Get in Touch With the Project Team</h2>
+          <p>Questions about hardware integration, ESP-NOW setup, or clinical trials? Send a message below.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="card contact-info">
+            <h3>Project Contact Details</h3>
+            <p><strong>Email:</strong> medbot.robotics@institution.edu</p>
+            <p><strong>Lab:</strong> Embedded Systems &amp; AI Robotics Lab, Block B</p>
+            <p><strong>API Endpoint:</strong> <code>POST /api/telemetry</code> (for live ESP8266 updates)</p>
+            <div class="api-snippet">
+              <small>Sample ESP8266 JSON Payload:</small>
+              <pre>{
+  "mode": "hardware",
+  "robotStatus": "Patient Found",
+  "faceMatchSignal": 1,
+  "obstacleDistanceCm": 85,
+  "batteryPercent": 92,
+  "batteryVoltage": 11.8
+}</pre>
+            </div>
+          </div>
+
+          <form class="card contact-form" id="contactForm">
+            <h3>Send Inquiry</h3>
+            <label>
+              <span>Your Name</span>
+              <input type="text" name="name" required placeholder="Dr. A. Sharma" />
+            </label>
+            <label>
+              <span>Email Address</span>
+              <input type="email" name="email" required placeholder="caregiver@hospital.org" />
+            </label>
+            <label>
+              <span>Message</span>
+              <textarea name="message" rows="4" required placeholder="Ask about schedule configuration or hardware specs..."></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <p class="form-feedback" id="contactFeedback" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Automatic Medicine Delivery Robot &mdash; AI-Based Patient Identification &amp; Autonomous Medicine Delivery</p>
+      <p>ESP32-CAM &bull; 2&times; ESP8266 (ESP-NOW) &bull; 6&times; SG90 &bull; DS3231 RTC &bull; L293D</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
