@@ -1,0 +1,22 @@
+{
+  "name": "automatic-medicine-delivery-robot",
+  "version": "1.0.0",
+  "description": "AI-Based Patient Identification and Autonomous Medicine Delivery Robot — Full-stack Web Dashboard, Interactive Simulator, and ESP32-CAM / ESP8266 Firmware",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test tests/server.test.js"
+  },
+  "keywords": [
+    "esp32-cam",
+    "esp8266",
+    "esp-now",
+    "medicine-delivery-robot",
+    "face-recognition",
+    "obstacle-avoidance",
+    "iot-healthcare"
+  ],
+  "license": "MIT"
+}
